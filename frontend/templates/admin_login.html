@@ -1,0 +1,97 @@
+<!-- templates/admin_login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Login - Mithaas</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <style>
+    body {
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      height: 100vh; 
+      background: #f8f0e3;
+      font-family: 'Poppins', sans-serif;
+    }
+    .login-container {
+      background: white;
+      padding: 2rem 3rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 320px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 1.5rem;
+      color: #d2691e;
+    }
+    label {
+      display: block;
+      text-align: left;
+      margin: 0.5rem 0 0.25rem;
+      font-weight: 600;
+      color: #444;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1.5px solid #d2b48c;
+      border-radius: 5px;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      background-color: #d2691e;
+      border: none;
+      padding: 0.75rem;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #b35400;
+    }
+    .error-msg {
+      color: red;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    .back-button {
+      background-color: #aaa;
+      margin-top: 0.8rem;
+    }
+    .back-button:hover {
+      background-color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Admin Login</h2>
+    {% if error %}
+      <div class="error-msg">{{ error }}</div>
+    {% endif %}
+    <form method="POST" action="/admin/login">
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text" required autocomplete="username" />
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" required autocomplete="current-password" />
+
+      <button type="submit">Log In</button>
+    </form>
+
+    <form action="/" method="get" style="margin-top: 1rem;">
+      <button type="submit" class="back-button">Back to Home</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shree Thaal - Traditional Sweets Made with Love</title>
+  <link rel="stylesheet" href="static/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+
+    /* Product Availability Styling */
+    .availability {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .availability.available {
+      color: green;
+    }
+
+    .availability.not-available {
+      color: red;
+    }
+
+     /* Contact Details Section */
+    .contact-details {
+      text-align: center;
+      background-color: #fffbf2;
+      padding: 20px;
+      margin-top: 30px;
+      border-radius: 8px;
+      border: 1px solid #ffcc80;
+    }
+
+    .contact-details p {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    .contact-details a {
+      color: #e65100;
+      text-decoration: none;
+      font-weight: 600;
+    } 
+  </style>
+</head>
+<body>
+
+ 
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="rakhi-icon">🧿</div>
+        <div class="header-text">
+          <h1 class="shop-name" data-translate="title">Shree Thaal</h1>
+          <p class="shop-subtitle" data-translate="subtitle">Home-Made Goodness, Straight to Your Door.</p>
+        </div>
+        <div class="rakhi-icon">🧿</div>
+      </div>
+      <p class="tagline" data-translate="tagline">Home Sweets, Served with Love ❤️</p>
+      <div class="raksha-bandhan-banner">
+        <span data-translate="festival">Celebrate the bond of love with every sweet from Shree Thaal this Raksha Bandhan 💖</span>
+      </div>
+
+       <!-- Language and Toggle Section -->
+  <div class="language-toggle">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <span class="lang-divider">|</span>
+    <button class="lang-btn" data-lang="hi">हिंदी</button>
+  </div>
+  
+    </div>
+    <div class="header-decoration"></div>
+  </header>
+
+  <!-- Cart Float Button -->
+  <div class="cart-float" id="cartFloat" title="View Cart">
+    <div class="cart-icon">🧺</div>
+    <span class="cart-count" id="cartCount">0</span>
+  </div>
+
+
+<!-- Delivery & Order Deadline Note -->
+<section class="delivery-note-section">
+  <div class="container">
+    <div class="delivery-note">
+      <p><strong data-translate="important-note">Important Note:</strong> 
+        <span data-translate="order-delivery-note">All orders will take up to 2-3 days for delivery. The last date for placing orders is <strong>5th August 2025</strong>.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <section class="sweets-section">
+        <h2 class="section-title" data-translate="menu-title">Our Sweet Collection</h2>
+        <div class="decorative-line">
+          <span class="line"></span>
+          <span class="ornament">❋</span>
+          <span class="line"></span>
+        </div>
+
+        <div class="sweets-grid" id="sweetsGrid">
+          {% for sweet in sweets %}
+          <div class="sweet-card">
+            <img src="{{ sweet.image_url }}" alt="{{ sweet.name_en }}" class="sweet-image" />
+
+            <h3 class="sweet-name" data-name-en="{{ sweet.name_en }}" data-name-hi="{{ sweet.name_hi }}">
+              {{ sweet.name_en }}
+            </h3>
+
+            <!-- Product Description -->
+            <p class="sweet-description" data-translate="sweet-description">
+              {{ sweet.description }}
+            </p>
+
+            <p class="sweet-price">₹{{ sweet.price_per_kg }}/kg</p>
+
+            <!-- Product Availability -->
+            <p class="availability {% if sweet.available %}available{% else %}not-available{% endif %}">
+              {% if sweet.available %}Available{% else %}Not Available{% endif %}
+            </p>
+
+            <select id="quantity-{{ sweet.id }}" class="quantity-select">
+              {% for qty in sweet.quantities %}
+                <option value="{{ qty.multiplier }}">
+                  {{ qty.weight }} - ₹{{ (sweet.price_per_kg * qty.multiplier) | round(0, 'floor') }}
+                </option>
+              {% endfor %}
+            </select>
+
+<button
+  class="add-to-cart-btn"
+  data-id="{{ sweet.id }}"
+  data-name-en="{{ sweet.name_en }}"
+  data-name-hi="{{ sweet.name_hi }}"
+  data-image="{{ sweet.image_url }}"
+  data-price-per-kg="{{ sweet.price_per_kg }}"
+  data-translate="add-to-cart"  
+  onclick="addToCart(this)"
+  {% if not sweet.available %} disabled {% endif %}>
+  Add to Cart 🛒
+</button>
+
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+  </main>
+
+ <section class="contact-details">
+    <h2 data-translate="contact-us-title">Contact Us for Orders</h2>
+    <p data-translate="contact-us-description">Have a sweet tooth or special request? Call or message us for order bookings!</p>
+<p><strong data-translate="business-contact-number">Contact Number: </strong>
+   <a href="tel:+91XXXXXXXXXX"></a>
+</p>
+    <p data-translate="order-confirmation">Our team will get back to you to confirm your order. We’re happy to serve you!</p>
+</section>
+
+
+  <!-- Cart Sidebar -->
+  <div class="cart-sidebar" id="cartSidebar" aria-hidden="true">
+    <div class="cart-header">
+      <h3 data-translate="cart-title">Your Sweet Basket 🧺</h3>
+      <button class="close-cart" id="closeCart" aria-label="Close Cart">×</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- Cart items inserted here by JS -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <strong><span data-translate="total">Total</span>: ₹<span id="cartTotal">0</span></strong>
+      </div>
+      <button class="place-order-btn" id="placeOrderBtn" data-translate="place-order">Place Order</button>
+    </div>
+  </div>
+
+  <!-- Order Form Modal -->
+  <div class="modal-overlay" id="orderModal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="orderFormTitle">
+      <div class="modal-header">
+        <h3 id="orderFormTitle" data-translate="order-form-title">Complete Your Order 📝</h3>
+        <button class="close-modal" id="closeModal" aria-label="Close Order Form">×</button>
+      </div>
+      <form class="order-form" id="orderForm" method="POST" action="/customer/order">
+        <div class="form-group">
+          <label for="customerName" data-translate="name-label">Full Name</label>
+          <input type="text" id="customerName" name="customerName" required />
+        </div>
+        <div class="form-group">
+          <label for="customerPhone" data-translate="phone-label">Mobile Number</label>
+<input type="tel" id="customerPhone" name="customerPhone" pattern="^[6-9]{1}[0-9]{9}$" required />
+        </div>
+       <div class="form-group">
+  <label for="deliveryAddress" data-translate="address-label">Delivery Address</label>
+  <textarea id="deliveryAddress" name="deliveryAddress" rows="3" required></textarea>
+  <small class="address-note" style="font-size: 12px; color: #888;">Please provide your complete delivery address (including street, city, and PIN code) for accurate delivery.</small>
+</div>
+        <input type="hidden" id="cartItemsJson" name="cartItemsJson" />
+        <button type="submit" class="submit-order-btn" data-translate="submit-order">Submit Order 🎉</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Thank You Modal -->
+  <div class="modal-overlay" id="thankYouModal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="thankYouTitle">
+      <div class="thank-you-content">
+        <div class="success-icon">❤️</div>
+        <h3 id="thankYouTitle" data-translate="thank-you-title">Thank You!</h3>
+        <p data-translate="order-received">Your sweet order has been received successfully.</p>
+        <p data-translate="contact-soon">We'll contact you shortly to confirm your order.</p>
+        <p class="blessing" data-translate="raksha-bandhan-wish">Your order is on the way! Happy Raksha Bandhan! ❤️</p>
+        <button class="continue-shopping-btn" id="continueShoppingBtn" data-translate="continue-shopping">Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+<h3 data-translate="footer-text">Celebrate the bond with our sweets 🎉 Happy Raksha Bandhan from Shree Thaal, where love is in every bite 💖</h3>
+      
+  <!-- Admin Login Button -->
+<div class="admin-login-btn-container">
+  <a href="/admin/login" class="admin-login-btn" target="_blank">
+    Admin Login
+  </a>
+</div>
+
+    </div>
+  </footer>
+
+  <style>
+  .admin-login-btn-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .admin-login-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #cd7e53ff;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  .admin-login-btn:hover {
+    background-color: #d43f00;
+  }
+</style>
+
+  <script src="static/script.js"></script>
+</body>
+</html>

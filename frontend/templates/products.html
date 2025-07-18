@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manage Products - Mithaas Admin</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1000px;
+      margin: 2rem auto;
+      background: #fafafa;
+      color: #333;
+      padding: 0 1rem;
+    }
+    h1, h2 {
+      color: #d35400;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .products-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product-image {
+      max-width: 100%;
+      max-height: 140px;
+      object-fit: contain;
+      border-radius: 6px;
+      margin-bottom: 0.8rem;
+      background: #fff8f0;
+      border: 1px solid #f0d9b5;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 0.4rem 0.5rem;
+      font-size: 0.95rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-family: inherit;
+      transition: border-color 0.2s ease;
+    }
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    textarea:focus {
+      border-color: #d35400;
+      outline: none;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 50px;
+      font-family: inherit;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+    }
+
+    button {
+      flex: 1;
+      background: #d35400;
+      border: none;
+      color: white;
+      padding: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+      margin-right: 0.5rem;
+      font-size: 0.9rem;
+    }
+    button:last-child {
+      margin-right: 0;
+    }
+    button:hover {
+      background: #b03e00;
+    }
+
+    /* Add Product Section */
+    #add-product-form {
+      max-width: 500px;
+      background: white;
+      margin: 0 auto 3rem auto;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgb(0 0 0 / 0.1);
+    }
+    #add-product-form p {
+      margin-bottom: 1rem;
+    }
+    #add-product-form label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.3rem;
+      color: #d35400;
+    }
+
+    /* Toggle Switch for availability */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #d35400;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    /* Quantities Section */
+    .quantities {
+      border: 1px solid #ddd;
+      padding: 0.5rem;
+      border-radius: 6px;
+      max-height: 150px;
+      overflow-y: auto;
+      background: #fff8f0;
+      margin-bottom: 0.5rem;
+    }
+
+    .quantity-item {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 0.3rem;
+      align-items: center;
+    }
+
+    .quantity-item input[type="text"],
+    .quantity-item input[type="number"] {
+      flex: 1;
+    }
+
+    .quantity-item button.remove-qty {
+      background: #c0392b;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 0 0.5rem;
+      cursor: pointer;
+      border-radius: 4px;
+      border: none;
+      color: white;
+      transition: background-color 0.2s ease;
+    }
+
+    .quantity-item button.remove-qty:hover {
+      background: #992d22;
+    }
+
+    .add-qty-btn {
+      background: #27ae60;
+      border: none;
+      color: white;
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      transition: background-color 0.2s ease;
+    }
+
+    .add-qty-btn:hover {
+      background: #1e8449;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- Back to Dashboard button -->
+ <a href="{{ url_for('admin.dashboard') }}" style="
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  background-color: #2980b9;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+">← Back to Dashboard</a>
+
+
+  <!-- Notification popup container -->
+  <div id="notification" style="
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #27ae60;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    font-weight: 600;
+    display: none;
+    z-index: 9999;
+    max-width: 300px;
+  "></div>
+
+  <h1>Products Management</h1>
+  {% if request.cookies.flash %}
+<div class="flash-message success">
+  {{ request.cookies.flash }}
+</div>
+{% endif %}
+
+
+  <div class="products-container">
+    {% for product in products %}
+    <div class="product-card">
+      <img src="{{ product.image_url or '/static/no-image.png' }}" alt="Product Image" class="product-image" />
+
+      <form method="POST" action="{{ url_for('admin.update_product_details', product_id=product.id) }}" class="update-product-form">
+        <input type="hidden" name="_method" value="PUT" />
+
+        <input type="text" name="name_en" value="{{ product.name_en }}" placeholder="Name (English)" required />
+        <input type="text" name="name_hi" value="{{ product.name_hi }}" placeholder="Name (Hindi)" required />
+        <textarea name="description" placeholder="Description" required>{{ product.description }}</textarea>
+        <input type="number" step="0.01" min="0" name="price_per_kg" value="{{ product.price_per_kg }}" placeholder="Price per kg" required />
+
+       <input type="text" name="image_url" value="{{ product.image_url }}" placeholder="Image URL" />
+
+        <label for="available-{{ product.id }}">Available:</label>
+        <label class="switch">
+          <input type="checkbox" id="available-{{ product.id }}" name="available" value="true" {% if product.available %}checked{% endif %}>
+          <span class="slider"></span>
+        </label>
+
+        <label>Quantities:</label>
+        <div class="quantities" data-product-id="{{ product.id }}">
+          {% for q in product.quantities %}
+          <div class="quantity-item">
+            <input type="text" name="quantities_weight" placeholder="Weight (e.g. 250g)" value="{{ q.weight }}" required />
+            <input type="number" step="0.01" min="0" name="quantities_multiplier" placeholder="Multiplier (e.g. 0.25)" value="{{ q.multiplier }}" required />
+            <button type="button" class="remove-qty" title="Remove quantity">&times;</button>
+          </div>
+          {% endfor %}
+        </div>
+        <button type="button" class="add-qty-btn">+ Add Quantity</button>
+
+        <div class="actions" style="margin-top: 10px;">
+          <button type="submit">Update</button>
+      </form>
+
+      <form method="POST" action="{{ url_for('admin.remove_product', product_id=product.id) }}" class="delete-product-form" style="display:inline-block; margin-left: 10px;">
+        <input type="hidden" name="_method" value="DELETE" />
+        <button type="submit" style="background:#c0392b; color:white; border:none; padding: 6px 12px; cursor:pointer;">Delete</button>
+      </form>
+        </div>
+    </div>
+    {% else %}
+    <p style="text-align:center; width: 100%; color: #666;">No products found.</p>
+    {% endfor %}
+  </div>
+
+  <h2>Add New Product</h2>
+  <form id="add-product-form" method="POST" action="{{ url_for('admin.add_product') }}">
+    <p>
+      <label for="name_en">Name (English):</label>
+      <input type="text" id="name_en" name="name_en" required />
+    </p>
+    <p>
+      <label for="name_hi">Name (Hindi):</label>
+      <input type="text" id="name_hi" name="name_hi" required />
+    </p>
+    <p>
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" rows="3" required></textarea>
+    </p>
+    <p>
+      <label for="price_per_kg">Price per kg (₹):</label>
+      <input type="number" id="price_per_kg" name="price_per_kg" step="0.01" min="0" required />
+    </p>
+    <p>
+      <label for="image_url">Image URL:</label>
+      <input type="text" id="image_url" name="image_url" />
+    </p>
+    <p>
+      <label for="available">Available:</label>
+      <label class="switch">
+        <input type="checkbox" id="available" name="available" value="true" checked>
+        <span class="slider"></span>
+      </label>
+    </p>
+
+    <label>Quantities:</label>
+    <div class="quantities" id="new-product-quantities">
+      <div class="quantity-item">
+        <input type="text" name="quantities_weight" placeholder="Weight (e.g. 250g)" required />
+        <input type="number" step="0.01" min="0" name="quantities_multiplier" placeholder="Multiplier (e.g. 0.25)" required />
+        <button type="button" class="remove-qty" title="Remove quantity">&times;</button>
+      </div>
+    </div>
+    <button type="button" class="add-qty-btn" id="add-new-qty-btn">+ Add Quantity</button>
+
+    <p>
+      <button type="submit">Add Product</button>
+    </p>
+  </form>
+
+  <script>
+    // Notification popup function
+    function showNotification(message, success = true) {
+      const notif = document.getElementById('notification');
+      notif.textContent = message;
+      notif.style.background = success ? '#27ae60' : '#c0392b';
+      notif.style.display = 'block';
+      notif.style.opacity = '1';
+      setTimeout(() => {
+        notif.style.transition = 'opacity 0.5s';
+        notif.style.opacity = '0';
+        setTimeout(() => {
+          notif.style.display = 'none';
+          notif.style.transition = '';
+        }, 500);
+      }, 3000);
+    }
+
+    // Add/remove quantity items logic
+    function addQuantity(container) {
+      const div = document.createElement('div');
+      div.className = 'quantity-item';
+      div.innerHTML = `
+        <input type="text" name="quantities_weight" placeholder="Weight (e.g. 250g)" required />
+        <input type="number" step="0.01" min="0" name="quantities_multiplier" placeholder="Multiplier (e.g. 0.25)" required />
+        <button type="button" class="remove-qty" title="Remove quantity">&times;</button>
+      `;
+      container.appendChild(div);
+      div.querySelector('.remove-qty').onclick = () => div.remove();
+    }
+
+    // Setup all existing quantity containers
+    document.querySelectorAll('.quantities').forEach(container => {
+      container.querySelectorAll('.remove-qty').forEach(btn => {
+        btn.onclick = () => btn.closest('.quantity-item').remove();
+      });
+
+      const addBtn = container.nextElementSibling;
+      if (addBtn && addBtn.classList.contains('add-qty-btn')) {
+        addBtn.onclick = () => addQuantity(container);
+      }
+    });
+
+    // Add Product form: pack quantities into hidden JSON field on submit
+    document.getElementById('add-product-form').addEventListener('submit', function(e) {
+      const form = e.target;
+      const weights = form.querySelectorAll('input[name="quantities_weight"]');
+      const multipliers = form.querySelectorAll('input[name="quantities_multiplier"]');
+      const quantities = [];
+
+      for (let i = 0; i < weights.length; i++) {
+        if (weights[i].value.trim() !== '') {
+          quantities.push({
+            weight: weights[i].value.trim(),
+            multiplier: parseFloat(multipliers[i].value) || 0
+          });
+        }
+      }
+
+      let hiddenInput = form.querySelector('input[name="quantities_json"]');
+      if (!hiddenInput) {
+        hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'quantities_json';
+        form.appendChild(hiddenInput);
+      }
+      hiddenInput.value = JSON.stringify(quantities);
+
+      // Disable individual quantity inputs so they're not sent twice
+      weights.forEach(w => w.disabled = true);
+      multipliers.forEach(m => m.disabled = true);
+    });
+
+    // Update Product forms: intercept submit and send PUT request via fetch API
+    document.querySelectorAll('.update-product-form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const weights = form.querySelectorAll('input[name="quantities_weight"]');
+        const multipliers = form.querySelectorAll('input[name="quantities_multiplier"]');
+        const quantities = [];
+
+        for (let i = 0; i < weights.length; i++) {
+          if (weights[i].value.trim() !== '') {
+            quantities.push({
+              weight: weights[i].value.trim(),
+              multiplier: parseFloat(multipliers[i].value) || 0
+            });
+          }
+        }
+
+        // Prepare data as JSON
+        const data = {
+          name_en: form.name_en.value,
+          name_hi: form.name_hi.value,
+          description: form.description.value,
+          price_per_kg: parseFloat(form.price_per_kg.value),
+          image_url: form.image_url?.value || null,
+          quantities: quantities,
+          available: form.available.checked
+        };
+
+        fetch(form.action, {
+          method: 'PUT',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+        }).then(response => {
+          if (response.ok) {
+            showNotification('Product updated successfully.');
+            setTimeout(() => location.reload(), 1500);
+          } else {
+            response.text().then(text => showNotification('Update failed: ' + text, false));
+          }
+        }).catch(err => showNotification('Update failed: ' + err.message, false));
+      });
+    });
+
+    // Delete Product forms: intercept submit and send DELETE request via fetch API
+    document.querySelectorAll('.delete-product-form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (!confirm('Are you sure you want to delete this product?')) return;
+
+        fetch(form.action, {
+          method: 'DELETE',
+        }).then(response => {
+          if (response.ok) {
+            showNotification('Product deleted successfully.');
+            setTimeout(() => location.reload(), 1500);
+          } else {
+            response.text().then(text => showNotification('Delete failed: ' + text, false));
+          }
+        }).catch(err => showNotification('Delete failed: ' + err.message, false));
+      });
+    });
+
+
+  if (document.cookie.includes('flash=')) {
+    document.cookie = "flash=; Max-Age=0; path=/";
+  }
+  </script>
+</body>
+
+
+</html>

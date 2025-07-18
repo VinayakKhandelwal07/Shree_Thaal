@@ -1,0 +1,934 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #4a2c2a;
+    background: linear-gradient(135deg, #fef7e0 0%, #fff8e7 100%);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Subtle Rakhi Pattern Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(236, 72, 153, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(217, 119, 6, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(251, 191, 36, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Language Toggle */
+
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    color: #fef7e0;
+    padding: 2rem 0 1.5rem;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(217, 119, 6, 0.3);
+}
+
+/* Language Toggle within Header */
+.language-toggle {
+    position: absolute; /* Position it absolutely within the header */
+    top: 20px; /* Adjust top distance as needed */
+    right: 20px; /* Move it to the right corner inside the header */
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 25px;
+    padding: 8px 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    font-family: Poppins, sans-serif;
+}
+
+/* Language button styles */
+.lang-btn {
+    background: none;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: #92400e;
+}
+
+.lang-btn.active {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    color: white;
+}
+
+.lang-btn:hover:not(.active) {
+    background: rgba(217, 119, 6, 0.1);
+}
+
+.lang-divider {
+    color: #d97706;
+    font-weight: 300;
+}
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.rakhi-icon {
+    font-size: 2rem;
+    animation: gentle-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes gentle-glow {
+    0% { opacity: 0.8; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.05); }
+}
+
+.shop-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    background: linear-gradient(45deg, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.shop-subtitle {
+    font-size: 1.1rem;
+    font-weight: 300;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+.tagline {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    color: #fef7e0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.raksha-bandhan-banner {
+    background: rgba(236, 72, 153, 0.2);
+    border: 2px solid rgba(236, 72, 153, 0.3);
+    border-radius: 25px;
+    padding: 0.8rem 1.5rem;
+    margin-top: 1rem;
+    display: inline-block;
+    backdrop-filter: blur(10px);
+}
+
+.raksha-bandhan-banner span {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fef7e0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.header-decoration {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: repeating-linear-gradient(
+        90deg,
+        #ec4899 0px,
+        #ec4899 8px,
+        #d97706 8px,
+        #d97706 16px,
+        #fbbf24 16px,
+        #fbbf24 24px
+    );
+}
+
+/* Delivery & Order Deadline Note Styling */
+.delivery-note-section {
+  background-color: #fff3e0; /* Light background color for contrast */
+  padding: 20px;
+  margin: 30px 0;
+  border-radius: 10px; /* Rounded corners for smooth edges */
+  border: 1px solid #FFB74D; /* Soft orange border for a subtle highlight */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+
+.delivery-note {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e65100; /* Orange text color */
+  text-align: center;
+  line-height: 1.6; /* Improved readability */
+}
+
+.delivery-note strong {
+  font-weight: bold;
+  color: #d32f2f; /* Dark red for the important date to make it stand out */
+}
+
+
+/* Main Content */
+.main-content {
+    padding: 3rem 0;
+}
+
+.section-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #92400e;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.decorative-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+    gap: 1rem;
+}
+
+.line {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d97706, transparent);
+}
+
+.ornament {
+    font-size: 1.5rem;
+    color: #d97706;
+}
+
+/* Sweets Grid */
+.sweets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.sweet-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(217, 119, 6, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(236, 72, 153, 0.1);
+    position: relative;
+      display: flex;
+    flex-direction: column; /* Ensure contents are stacked vertically */
+}
+
+.sweet-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ec4899, #d97706, #fbbf24);
+}
+
+.sweet-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(217, 119, 6, 0.2);
+    border-color: rgba(236, 72, 153, 0.3);
+}
+
+.sweet-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.sweet-card:hover .sweet-image {
+    transform: scale(1.05);
+}
+
+.sweet-info {
+    padding: 1.3rem;
+}
+
+.sweet-name {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #92400e;
+    text-align: center; /* Center sweet name */
+}
+
+.sweet-price {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #dc2626;
+    margin-bottom: 0.8rem;
+}
+
+.quantity-selector {
+    margin-bottom: 1.5rem;
+}
+
+.quantity-selector label {
+    display: block;
+    margin-bottom: 1%;
+    font-weight: 500;
+    color: #92400e;
+    font-size: 0.9rem;
+}
+
+.quantity-select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 2px solid #fbbf24;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    background: white;
+    color: #92400e;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.quantity-select:focus {
+    outline: none;
+    border-color: #ec4899;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    padding: 0.8rem;
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+     margin-top: 0.3rem;
+}
+
+.add-to-cart-btn:hover {
+    background: linear-gradient(135deg, #be185d 0%, #9d174d 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
+}
+
+.add-to-cart-btn:active {
+    transform: translateY(0);
+}
+
+/* Cart Float Button */
+.cart-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+    color: white;
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.cart-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.5);
+}
+
+.cart-icon {
+    font-size: 1.8rem;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #fbbf24;
+    color: #92400e;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 2px solid white;
+}
+
+/* Cart Sidebar */
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 420px;
+    height: 100vh;
+    background: white;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+    transition: right 0.3s ease;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    border-left: 4px solid #ec4899;
+}
+
+.cart-sidebar.open {
+    right: 0;
+}
+
+.cart-header {
+    padding: 1.5rem;
+    border-bottom: 2px solid #fef7e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #fef7e0 0%, #fff8e7 100%);
+}
+
+.cart-header h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #92400e;
+}
+
+.close-cart {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #92400e;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.close-cart:hover {
+    background: rgba(146, 64, 14, 0.1);
+}
+
+.cart-items {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #fef7e0;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.cart-item:hover {
+    background: #fef7e0;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-item-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 1rem;
+    border: 2px solid #fbbf24;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-name {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    color: #92400e;
+}
+
+.cart-item-quantity {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.25rem;
+}
+
+.cart-item-price {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.quantity-btn {
+    background: #fbbf24;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #92400e;
+    transition: all 0.2s ease;
+}
+
+.quantity-btn:hover {
+    background: #f59e0b;
+    transform: scale(1.1);
+}
+
+.quantity-display {
+    min-width: 30px;
+    text-align: center;
+    font-weight: 600;
+    color: #92400e;
+}
+
+.remove-item {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.2s ease;
+}
+
+.remove-item:hover {
+    background: #b91c1c;
+}
+
+.cart-footer {
+    padding: 1.5rem;
+    border-top: 2px solid #fef7e0;
+    background: linear-gradient(135deg, #fef7e0 0%, #fff8e7 100%);
+}
+
+.cart-total {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #92400e;
+    font-family: 'Dancing Script', cursive;
+}
+
+.place-order-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+}
+
+.place-order-btn:hover {
+    background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+}
+
+.place-order-btn:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1002;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    transform: translateY(-50px);
+    transition: transform 0.3s ease;
+    border: 3px solid #fbbf24;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    padding: 1.5rem;
+    border-bottom: 2px solid #fef7e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #fef7e0 0%, #fff8e7 100%);
+}
+
+.modal-header h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #92400e;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #92400e;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.close-modal:hover {
+    background: rgba(146, 64, 14, 0.1);
+}
+
+/* Order Form */
+.order-form {
+    padding: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #92400e;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #fbbf24;
+    border-radius: 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #ec4899;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+.submit-order-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
+}
+
+.submit-order-btn:hover {
+    background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(217, 119, 6, 0.4);
+}
+
+/* Thank You Modal */
+.thank-you-content {
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.success-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: bounce 1s ease-in-out infinite alternate;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+
+.thank-you-content h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #92400e;
+}
+
+.thank-you-content p {
+    margin-bottom: 1rem;
+    color: #4a2c2a;
+    line-height: 1.6;
+}
+
+.blessing {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    color: #ec4899;
+    font-weight: 600;
+    background: linear-gradient(45deg, #ec4899, #d97706);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.continue-shopping-btn {
+    margin-top: 1.5rem;
+    padding: 0.8rem 2rem;
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.continue-shopping-btn:hover {
+    background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+    transform: translateY(-2px);
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Empty Cart */
+.empty-cart {
+    text-align: center;
+    padding: 2rem;
+    color: #92400e;
+}
+
+.empty-cart-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Footer */
+.footer {
+    background: linear-gradient(135deg, #92400e 0%, #78350f 100%);
+    color: #fef7e0;
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
+
+.footer h3 {
+    font-family: 'Dancing Script', cursive !important; 
+    font-size: 1.5rem; /* Increased font size for the heading */
+    margin-bottom: 0.5rem;
+}
+
+.footer-decoration {
+    font-size: 1.5rem;
+    opacity: 0.8;
+}
+
+/* Hindi Font Support */
+.hindi {
+    font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+}
+
+.hindi .shop-name,
+.hindi .section-title,
+.hindi .cart-header h3,
+.hindi .modal-header h3,
+.hindi .thank-you-content h3,
+.hindi .tagline,
+.hindi .blessing,
+.hindi .cart-total,
+.hindi .form-group label {
+    font-family: 'Noto Sans Devanagari', 'Dancing Script', cursive;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .shop-name {
+        font-size: 3.5rem;
+    }
+    
+    .sweets-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .cart-sidebar {
+        width: 450px;
+        right: -450px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .sweets-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .shop-name {
+        font-size: 2.5rem;
+    }
+    
+    .tagline {
+        font-size: 1.1rem;
+    }
+    
+    .cart-sidebar {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10px;
+    }
+    
+    .cart-float {
+        width: 60px;
+        height: 60px;
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .cart-icon {
+        font-size: 1.6rem;
+    }
+    
+    .rakhi-icon {
+        font-size: 1.5rem;
+    }
+    
+    .header-content {
+        gap: 0.5rem;
+    }
+    
+    .language-toggle {
+        position: fixed; /* Fixes the position */
+        top: 15px;
+        right: 15px;
+        padding: 6px 12px;
+    }
+    
+    .lang-btn {
+        padding: 4px 8px;
+        font-size: 0.8rem;
+    }
+
+    
+}
+

@@ -1,0 +1,29 @@
+# Virtual environment
+venv/
+env/
+
+# Python compiled files
+__pycache__/
+*.pyc
+
+# Environment variables (if applicable)
+.env
+
+# Alembic environment file (contains sensitive info)
+alembic/env.py
+
+# IDE/editor specific files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Logs
+*.log
+
+
+
+
+# Other build or temporary files (if you have them)
+dist/
+build/

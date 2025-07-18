@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Orders Management - Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: #ffffff; /* White background */
+      color: #333;
+    }
+
+    /* Header */
+    .header {
+      background-color: #c47a2b6f; /* Warm lemon soft color */
+      color: white;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-bottom: 3px solid #e65100; /* Red accent */
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15); /* Soft shadow */
+    }
+
+    .back-button {
+      background-color: #cb582eff; /* Warm lemon color */
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 5px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: #e65100; /* Red on hover */
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 2rem;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    thead {
+      background-color: #c47a2b6f;/* Warm lemon soft color */
+      color: black;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Order status dropdown */
+    .status-select-inline {
+      padding: 0.5rem 0.7rem;
+      border-radius: 6px;
+      font-weight: 600;
+      border: 1px solid #ccc;
+      font-size: 0.9rem;
+      background-color: #f3f3f3;
+      color: #333;
+    }
+
+    .status-select-inline:focus {
+      border-color: #f8b94e; /* Highlighted when focused */
+      outline: none;
+    }
+
+    /* Disabled select when order is delivered or canceled */
+    .status-select-inline[disabled] {
+      background-color: #ddd;
+      color: #888;
+    }
+
+    /* View Button */
+    .view-button {
+      background-color: #f8b94e; /* Warm lemon soft color */
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .view-button:hover {
+      background-color: #fff2cc; /* Soft yellow on hover */
+    }
+
+    /* Delete Button */
+    .delete-button {
+      background-color: #e65100; /* Red color */
+      color: white;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .delete-button:hover {
+      background-color: #b43e00; /* Darker red on hover */
+    }
+
+    .delete-button:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.5);
+    }
+
+    /* Optional: Add a deleting state when button is clicked */
+    .deleting {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+      }
+
+      .header h1 {
+        font-size: 1.75rem;
+      }
+
+      .back-button {
+        margin-top: 10px;
+      }
+
+      .main-content {
+        padding: 1rem;
+      }
+
+      table th, table td {
+        font-size: 0.85rem;
+        padding: 0.6rem;
+      }
+
+      .view-button, .delete-button {
+        font-size: 0.75rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <h1>Manage Orders</h1>
+  <a href="/admin/dashboard" class="back-button">Back to Dashboard</a>
+</header>
+
+<main class="main-content">
+  <h2>Order List</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Customer</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Total (₹)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="ordersTableBody">
+      {% for order in orders %}
+      <tr data-order-id="{{ order.id }}">
+        <td>{{ order.id }}</td>
+        <td>{{ order.customer.name }}</td>
+        <td>{{ order.created_at.strftime('%Y-%m-%d') }}</td>
+        <td>
+          <select class="status-select-inline" data-order-id="{{ order.id }}" {% if order.status in ['delivered', 'cancelled'] %} disabled {% endif %}>
+            <option value="placed" {{ 'selected' if order.status == 'placed' else '' }}>Placed</option>
+            <option value="accepted" {{ 'selected' if order.status == 'accepted' else '' }}>Accepted</option>
+            <option value="preparing" {{ 'selected' if order.status == 'preparing' else '' }}>Preparing</option>
+            <option value="delivered" {{ 'selected' if order.status == 'delivered' else '' }}>Delivered</option>
+            <option value="cancelled" {{ 'selected' if order.status == 'cancelled' else '' }}>Cancelled</option>
+          </select>
+        </td>
+        <td>₹{{ '%.2f'|format(order.total_price) }}</td>
+        <td>
+          <a href="{{ url_for('admin.get_order_details', order_id=order.id) }}" class="view-button">View</a>
+          <button class="delete-button" data-order-id="{{ order.id }}">Delete</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</main>
+
+<script>
+  // Capitalize helper
+  function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  // Update order status on dropdown change
+  document.querySelectorAll('.status-select-inline').forEach(selectElem => {
+    selectElem.dataset.prevStatus = selectElem.value;
+
+    selectElem.addEventListener('change', async () => {
+      const orderId = selectElem.dataset.orderId;
+      const newStatus = selectElem.value;
+
+      // If the order is already cancelled or delivered, prevent the change
+      if (selectElem.disabled) {
+        alert(`Order ${orderId} status is locked and cannot be changed.`);
+        selectElem.value = selectElem.dataset.prevStatus;
+        return;
+      }
+
+      try {
+        const response = await fetch(`/admin/orders/${orderId}/status`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus })
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.detail || 'Failed to update status');
+        }
+
+        const updated = await response.json();
+        alert(`Order ${orderId} status updated to ${capitalize(updated.status)}.`);
+        selectElem.dataset.prevStatus = newStatus;
+
+      } catch (err) {
+        alert(`Error updating status: ${err.message}`);
+        selectElem.value = selectElem.dataset.prevStatus;
+      }
+    });
+  });
+
+  // Delete button click handler
+  document.querySelectorAll('.delete-button').forEach(button => {
+    button.addEventListener('click', async (event) => {
+      const orderId = event.target.dataset.orderId;
+
+      // Confirm before deletion
+      if (!confirm(`Are you sure you want to delete order ${orderId}? This action cannot be undone.`)) {
+        return;
+      }
+
+      const row = event.target.closest('tr');
+      row.classList.add('deleting');  // Adding a class to show the deletion state
+
+      try {
+        const response = await fetch(`/admin/orders/${orderId}`, {
+          method: 'DELETE',
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to delete order');
+        }
+
+        const result = await response.json();
+        alert(`Order ${orderId} deleted successfully.`);
+        row.remove();  // Remove the order row from the table
+
+      } catch (err) {
+        alert(`Error deleting order: ${err.message}`);
+        row.classList.remove('deleting');  // Remove the deletion state if error occurs
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

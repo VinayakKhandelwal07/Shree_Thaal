@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard -Shree Thaal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+      color: #333;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #c47a2b6f;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar h1 {
+      font-size: 1.6rem;
+      margin: 0;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 2rem;
+      font-weight: 500;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      color: #fff2cc;
+    }
+
+    .navbar .logout-form button {
+      background-color: white;
+      color: #f8b94e;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-left: 3rem;
+    }
+
+    .navbar .logout-form button:hover {
+      background-color: #ffcc80;
+    }
+
+    .main-content {
+      margin-top: 100px;
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #777;
+      font-weight: 500;
+    }
+
+    .card p {
+      margin: 0.5rem 0 0 0;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #e65100;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 3rem;
+      background-color: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      overflow-x: auto;
+    }
+
+    .section::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .section::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      border-radius: 4px;
+    }
+
+    .section h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      color: #e65100;
+      margin-bottom: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      min-width: 600px;
+    }
+
+    table th,
+    table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    table th {
+      background-color: #fff8f1;
+      color: #e65100;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.8rem;
+      border-radius: 12px;
+      color: white;
+    }
+
+    .tag.pending {
+      background-color: #fbc02d;
+    }
+
+    .tag.completed {
+      background-color: #66bb6a;
+    }
+
+    ul.product-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.product-list li {
+      padding: 0.5rem 0;
+      font-size: 1rem;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    ul.product-list li:last-child {
+      border-bottom: none;
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+      .navbar h1 {
+        font-size: 1.2rem;
+      }
+
+      .main-content {
+        padding: 1.5rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .card {
+        padding: 1rem;
+      }
+
+      .section h2 {
+        font-size: 1.3rem;
+      }
+
+      table {
+        font-size: 0.85rem;
+      }
+
+      .tag {
+        font-size: 0.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar h1 {
+        font-size: 1rem;
+      }
+
+      .logout-form button {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+      }
+
+      .main-content {
+        padding: 1rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .card {
+        padding: 1rem;
+      }
+
+      .section {
+        padding: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .section h2 {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+      }
+
+      table {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Welcome, {{ admin }} 👋</h1>
+    <div>
+      <a href="/admin/dashboard">Dashboard</a>
+      <a href="/admin/orders">Orders</a>
+      <a href="/admin/products">Products</a>
+      <form action="/admin/logout" method="post" class="logout-form" style="display:inline;">
+        <button type="submit">Logout</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Summary Cards -->
+    <div class="stats-grid">
+      <div class="card">
+        <h3>Total Orders</h3>
+        <p>{{ summary.total_orders }}</p>
+      </div>
+      <div class="card">
+        <h3>Total Revenue (Delivered Orders)</h3>
+        <p>₹{{ summary.total_revenue or 0 }}</p>
+      </div>
+      <div class="card">
+        <h3>Pending Orders</h3>
+        <p>{{ summary.pending_orders }}</p>
+      </div>
+      <div class="card">
+        <h3>Completed Orders</h3>
+        <p>{{ summary.completed_orders }}</p>
+      </div>
+    </div>
+
+    <!-- Top 5 Upcoming Orders -->
+    <div class="section">
+      <h2>Top 5 Upcoming Orders</h2>
+      {% if recent_orders %}
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Products</th>
+            <th>Status</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in recent_orders %}
+          <tr>
+            <td>#{{ order.id }}</td>
+            <td>{{ order.customer.name }}</td>
+            <td>
+              {% set product_names = [] %}
+              {% for item in order.items %}
+              {% set _ = product_names.append(item.product.name_en ~ ' (' ~ item.weight_selected ~ ')') %}
+              {% endfor %}
+              {{ product_names | join(', ') }}
+            </td>
+            <td>
+              <span class="tag {{ 'pending' if order.status in ['placed', 'Pending'] else 'completed' }}">
+                {{ order.status }}
+              </span>
+            </td>
+            <td>₹{{ order.total_price }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p>No upcoming orders found.</p>
+      {% endif %}
+    </div>
+
+    <!-- Top Products -->
+    <div class="section">
+      <h2>Top Products </h2>
+      {% if top_products %}
+      <ul class="product-list">
+        {% for product in top_products %}
+        <li>
+          <span>{{ product.name }}</span>
+          <strong>{{ product.orders }} orders</strong>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No product data available.</p>
+      {% endif %}
+    </div>
+  </div>
+</body>
+
+</html>
