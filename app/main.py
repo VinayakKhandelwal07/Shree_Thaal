@@ -27,7 +27,7 @@ templates = Jinja2Templates(directory=str(FRONTEND_DIR))
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["shree-thaal.onrender.com"],  # Change this in production
+    allow_origins=["*"],  # Change this in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
