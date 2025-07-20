@@ -1,97 +1,157 @@
-<!-- templates/admin_login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin Login - Shree Thaal</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-F1qwZTJpuVxBCLYxAjUZwHv+grYkXX2eIcxv7p7eb2cFi0M+X+9ozk3dcmiVxybOE4ynI+5ZLx5jvEYfN2xApQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <style>
     body {
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      height: 100vh; 
-      background: #f8f0e3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #f8f0e3, #ffe6cc);
       font-family: 'Poppins', sans-serif;
+      margin: 0;
     }
+
     .login-container {
-      background: white;
-      padding: 2rem 3rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      width: 320px;
+      background: #fff;
+      padding: 2.5rem 2.8rem;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      width: 360px;
+      max-width: 90%;
       text-align: center;
     }
+
     h2 {
-      margin-bottom: 1.5rem;
       color: #d2691e;
+      font-size: 1.9rem;
+      margin-bottom: 1.8rem;
     }
+
     label {
       display: block;
       text-align: left;
-      margin: 0.5rem 0 0.25rem;
+      margin-bottom: 0.4rem;
       font-weight: 600;
       color: #444;
+      font-size: 0.95rem;
     }
+
     input[type="text"],
-    input[type="password"] {
+    .password-wrapper input[type="password"] {
       width: 100%;
-      padding: 0.5rem;
+      padding: 0.6rem 2.5rem 0.6rem 0.75rem;
       border: 1.5px solid #d2b48c;
-      border-radius: 5px;
+      border-radius: 6px;
       font-size: 1rem;
-      margin-bottom: 1rem;
       box-sizing: border-box;
     }
+
+    input:focus {
+      border-color: #d2691e;
+      outline: none;
+    }
+
+    .password-wrapper {
+      position: relative;
+      margin-bottom: 1.3rem;
+    }
+
+    .password-wrapper i {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .password-wrapper i:hover {
+      color: #d2691e;
+    }
+
     button {
       width: 100%;
       background-color: #d2691e;
       border: none;
-      padding: 0.75rem;
+      padding: 0.8rem;
       color: white;
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s;
     }
+
     button:hover {
       background-color: #b35400;
+      transform: translateY(-1px);
     }
-    .error-msg {
-      color: red;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-    }
+
     .back-button {
-      background-color: #aaa;
-      margin-top: 0.8rem;
+      background-color: #bbb;
+      margin-top: 1rem;
     }
+
     .back-button:hover {
-      background-color: #888;
+      background-color: #999;
+    }
+
+    .error-msg {
+      color: #e63946;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 500;
     }
   </style>
 </head>
 <body>
   <div class="login-container">
     <h2>Admin Login</h2>
+
     {% if error %}
       <div class="error-msg">{{ error }}</div>
     {% endif %}
+
     <form method="POST" action="/admin/login">
       <label for="username">Username</label>
       <input id="username" name="username" type="text" required autocomplete="username" />
 
       <label for="password">Password</label>
-      <input id="password" name="password" type="password" required autocomplete="current-password" />
+      <div class="password-wrapper">
+        <input id="password" name="password" type="password" required autocomplete="current-password" />
+        <i class="fa-solid fa-eye" id="toggle-password" aria-label="Toggle password visibility" tabindex="0"></i>
+      </div>
 
       <button type="submit">Log In</button>
     </form>
 
-    <form action="/" method="get" style="margin-top: 1rem;">
+    <form method="GET" action="/">
       <button type="submit" class="back-button">Back to Home</button>
     </form>
   </div>
+
+  <script>
+    const togglePassword = document.getElementById("toggle-password");
+    const passwordInput = document.getElementById("password");
+
+    togglePassword.addEventListener("click", () => {
+      const isHidden = passwordInput.type === "password";
+      passwordInput.type = isHidden ? "text" : "password";
+      togglePassword.classList.toggle("fa-eye");
+      togglePassword.classList.toggle("fa-eye-slash");
+    });
+  </script>
 </body>
 </html>
