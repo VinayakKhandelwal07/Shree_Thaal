@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin Dashboard -Shree Thaal</title>
+  <title>Admin Dashboard - Shree Thaal</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -17,61 +17,100 @@
 
     /* Navbar */
     .navbar {
-      background-color: #c47a2b6f;
+      background-color: #c47a2b;
       color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 2rem;
+      padding: 1rem 2rem;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .navbar h1 {
-      font-size: 1.6rem;
-      margin: 0;
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
-    .navbar a {
+    .navbar h1 {
+      font-size: 1.5rem;
+      margin: 0;
+      flex:1;
+          }
+
+    .menu-toggle {
+      display: none;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      justify-content: flex-end;
+  flex: 1;
+    }
+
+    .nav-links a {
       color: white;
       text-decoration: none;
-      margin-left: 2rem;
       font-weight: 500;
-      font-size: 1.1rem;
       transition: color 0.3s ease;
     }
 
-    .navbar a:hover {
-      color: #fff2cc;
+    .nav-links a:hover {
+      color: #ffefc2;
     }
 
-    .navbar .logout-form button {
+    .logout-form button {
       background-color: white;
-      color: #f8b94e;
+      color: #c47a2b;
       border: none;
-      padding: 0.75rem 1.5rem;
+      padding: 0.6rem 1.2rem;
       font-weight: bold;
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      margin-left: 3rem;
     }
 
-    .navbar .logout-form button:hover {
-      background-color: #ffcc80;
+    .logout-form button:hover {
+      background-color: #ffe0b2;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 1rem;
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .logout-form {
+        width: 100%;
+        text-align: left;
+        margin-top: 0.5rem;
+      }
     }
 
     .main-content {
-      margin-top: 100px;
       padding: 3rem 2rem;
       max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: auto;
     }
 
-    /* Stats Grid */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -85,12 +124,6 @@
       padding: 1.5rem;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     .card h3 {
@@ -101,56 +134,42 @@
     }
 
     .card p {
-      margin: 0.5rem 0 0 0;
+      margin-top: 0.5rem;
       font-size: 1.8rem;
       font-weight: bold;
       color: #e65100;
     }
 
-    /* Section */
     .section {
-      margin-bottom: 3rem;
       background-color: #fff;
       padding: 1.5rem;
+      margin-bottom: 2rem;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       overflow-x: auto;
     }
 
-    .section::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .section::-webkit-scrollbar-thumb {
-      background-color: #ccc;
-      border-radius: 4px;
-    }
-
     .section h2 {
-      margin-top: 0;
+      margin: 0 0 1rem 0;
       font-size: 1.5rem;
       color: #e65100;
-      margin-bottom: 1rem;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1rem;
       min-width: 600px;
     }
 
     table th,
     table td {
       padding: 0.75rem 1rem;
-      border-bottom: 1px solid #eee;
       text-align: left;
-      font-size: 0.9rem;
-      white-space: nowrap;
+      border-bottom: 1px solid #eee;
     }
 
     table th {
-      background-color: #fff8f1;
+      background-color: #fff3e0;
       color: #e65100;
     }
 
@@ -176,110 +195,39 @@
     }
 
     ul.product-list li {
-      padding: 0.5rem 0;
-      font-size: 1rem;
-      border-bottom: 1px solid #eee;
       display: flex;
       justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
     }
 
     ul.product-list li:last-child {
       border-bottom: none;
     }
-
-    /* Media Queries */
-    @media (max-width: 768px) {
-      .navbar h1 {
-        font-size: 1.2rem;
-      }
-
-      .main-content {
-        padding: 1.5rem;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      .card {
-        padding: 1rem;
-      }
-
-      .section h2 {
-        font-size: 1.3rem;
-      }
-
-      table {
-        font-size: 0.85rem;
-      }
-
-      .tag {
-        font-size: 0.75rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .navbar h1 {
-        font-size: 1rem;
-      }
-
-      .logout-form button {
-        font-size: 0.9rem;
-        padding: 0.5rem 1rem;
-      }
-
-      .main-content {
-        padding: 1rem;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      .card {
-        padding: 1rem;
-      }
-
-      .section {
-        padding: 1rem;
-        margin-bottom: 2rem;
-      }
-
-      .section h2 {
-        font-size: 1.2rem;
-        margin-bottom: 0.8rem;
-      }
-
-      .tag {
-        font-size: 0.7rem;
-        padding: 0.2rem 0.5rem;
-      }
-
-      table {
-        font-size: 0.8rem;
-      }
-    }
   </style>
 </head>
 
 <body>
+
   <!-- Navbar -->
-  <div class="navbar">
-    <h1>Welcome, {{ admin }} 👋</h1>
-    <div>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <h1>Welcome, {{ admin }} 👋</h1>
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    </div>
+    <div class="nav-links" id="nav-links">
       <a href="/admin/dashboard">Dashboard</a>
       <a href="/admin/orders">Orders</a>
       <a href="/admin/products">Products</a>
-      <form action="/admin/logout" method="post" class="logout-form" style="display:inline;">
+      <form action="/admin/logout" method="post" class="logout-form">
         <button type="submit">Logout</button>
       </form>
     </div>
-  </div>
+  </nav>
 
   <!-- Main Content -->
   <div class="main-content">
+
     <!-- Summary Cards -->
     <div class="stats-grid">
       <div class="card">
@@ -300,7 +248,7 @@
       </div>
     </div>
 
-    <!-- Top 5 Upcoming Orders -->
+    <!-- Upcoming Orders -->
     <div class="section">
       <h2>Top 5 Upcoming Orders</h2>
       {% if recent_orders %}
@@ -343,7 +291,7 @@
 
     <!-- Top Products -->
     <div class="section">
-      <h2>Top Products </h2>
+      <h2>Top Products</h2>
       {% if top_products %}
       <ul class="product-list">
         {% for product in top_products %}
@@ -357,7 +305,17 @@
       <p>No product data available.</p>
       {% endif %}
     </div>
+
   </div>
+
+  <!-- JavaScript -->
+  <script>
+    function toggleMenu() {
+      const navLinks = document.getElementById('nav-links');
+      navLinks.classList.toggle('show');
+    }
+  </script>
+
 </body>
 
 </html>
