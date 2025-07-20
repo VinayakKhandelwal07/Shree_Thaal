@@ -9,85 +9,142 @@
     * {
       box-sizing: border-box;
     }
-
     body {
+      margin: 0;
       font-family: 'Poppins', sans-serif;
-      margin: 0;
-      background-color: #ffffff; /* White background */
+      background-color: #ffffff;
       color: #333;
+      overflow-y: auto;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
 
-    /* Header */
-    .header {
-      background-color: #c47a2b6f; /* Warm lemon soft color */
+    /* Navbar */
+    .navbar {
+      background-color: #c47a2b;
       color: white;
-      padding: 1.5rem 2rem;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
       display: flex;
-      justify-content: space-between;
+      flex-wrap: wrap;
       align-items: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      border-bottom: 3px solid #e65100; /* Red accent */
-      border-radius: 8px;
-      transition: background 0.3s ease;
+      justify-content: space-between;
     }
 
-    .header h1 {
+    .navbar h1 {
+      font-size: 1.5rem;
       margin: 0;
-      font-size: 2rem;
-      letter-spacing: 1.2px;
-      font-weight: 700;
-      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.15); /* Soft shadow */
+      flex: 1 1 auto;
+      min-width: 200px;
     }
 
-    .back-button {
-      background-color: #cb582eff; /* Warm lemon color */
+    .menu-toggle {
+      display: none;
+      font-size: 2rem;
+      background: none;
+      border: none;
       color: white;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      justify-content: flex-end;
+      flex: 1 1 auto;
+      min-width: 250px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #ffefc2;
+    }
+
+    .logout-form button {
+      background-color: white;
+      color: #c47a2b;
       border: none;
       padding: 0.6rem 1.2rem;
+      font-weight: bold;
       border-radius: 5px;
-      font-weight: 600;
-      font-size: 1rem;
       cursor: pointer;
-      text-decoration: none;
       transition: background-color 0.3s ease;
+      white-space: nowrap;
     }
 
-    .back-button:hover {
-      background-color: #e65100; /* Red on hover */
+    .logout-form button:hover {
+      background-color: #ffe0b2;
     }
 
-    /* Main Content */
-    .main-content {
-      padding: 2rem;
+    /* Main content */
+    main.main-content {
+      margin: 0 auto;
+      padding: 2rem 1rem 2rem;
+      max-width: 1200px;
+      min-height: calc(100vh - 60px);
+      overflow-y: auto;
+    }
+
+    /* Table container with scroll */
+    .table-container {
+      max-height: 70vh;
+      overflow-y: auto;
+      overflow-x: auto; /* Enable horizontal scroll */
+      border-radius: 8px;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      background-color: white;
+      -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
     }
 
     /* Table */
     table {
       width: 100%;
+      min-width: 750px; /* prevent squeezing, allows scroll */
       border-collapse: collapse;
-      background-color: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      table-layout: fixed;
     }
 
-    thead {
-      background-color: #c47a2b6f;/* Warm lemon soft color */
+    thead th {
+      position: sticky;
+      top: 0;
+      background-color: #c47a2b;
       color: black;
+      font-weight: 600;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+      word-wrap: break-word;
+      white-space: nowrap;
     }
 
-    th, td {
-      padding: 1rem;
-      text-align: left;
+    tbody td {
+      padding: 1rem 1.25rem;
       border-bottom: 1px solid #ddd;
-      vertical-align: middle;
+      text-align: left;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-word;
+      white-space: nowrap;
     }
 
     tr:last-child td {
       border-bottom: none;
     }
 
-    /* Order status dropdown */
+    /* Status select */
     .status-select-inline {
       padding: 0.5rem 0.7rem;
       border-radius: 6px;
@@ -95,60 +152,61 @@
       border: 1px solid #ccc;
       font-size: 0.9rem;
       background-color: #f3f3f3;
-      color: #333;
+      cursor: pointer;
+      min-width: 120px;
+      max-width: 160px;
+      transition: border-color 0.3s ease;
     }
-
     .status-select-inline:focus {
-      border-color: #f8b94e; /* Highlighted when focused */
+      border-color: #f8b94e;
       outline: none;
     }
-
-    /* Disabled select when order is delivered or canceled */
     .status-select-inline[disabled] {
       background-color: #ddd;
       color: #888;
+      cursor: not-allowed;
     }
 
-    /* View Button */
-    .view-button {
-      background-color: #f8b94e; /* Warm lemon soft color */
-      color: white;
-      padding: 0.4rem 0.8rem;
-      border-radius: 4px;
+    /* Action buttons container */
+    td > .view-button,
+    td > .delete-button {
+      display: inline-block;
       font-weight: 600;
       font-size: 0.85rem;
-      text-decoration: none;
-      display: inline-block;
+      border-radius: 4px;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      white-space: nowrap;
       margin-right: 10px;
+      text-align: center;
+      line-height: 1.2;
     }
 
-    .view-button:hover {
-      background-color: #fff2cc; /* Soft yellow on hover */
+    .view-button {
+      background-color: #c47a2b;
+      color: black;
+      text-decoration: none;
+    }
+    .view-button:hover,
+    .view-button:focus {
+      background-color: #ffefc2;
+      outline: none;
     }
 
-    /* Delete Button */
     .delete-button {
-      background-color: #e65100; /* Red color */
+      background-color: #e65100;
       color: white;
       border: none;
-      padding: 0.4rem 0.8rem;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: inline-block;
     }
-
-    .delete-button:hover {
-      background-color: #b43e00; /* Darker red on hover */
-    }
-
+    .delete-button:hover,
     .delete-button:focus {
+      background-color: #b43e00;
       outline: none;
-      box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.5);
+      box-shadow: 0 0 0 2px rgba(255,77,79,0.5);
     }
 
-    /* Optional: Add a deleting state when button is clicked */
     .deleting {
       opacity: 0.5;
       pointer-events: none;
@@ -156,160 +214,164 @@
 
     /* Responsive styles */
     @media (max-width: 768px) {
-      .header {
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
         flex-direction: column;
-        align-items: flex-start;
-        padding: 1rem;
+        width: 100%;
+        gap: 0;
+        margin-top: 1rem;
+        padding-left: 0;
       }
 
-      .header h1 {
-        font-size: 1.75rem;
+      .nav-links.show {
+        display: flex;
       }
 
-      .back-button {
-        margin-top: 10px;
+      .nav-links a,
+      .logout-form button {
+        width: 100%;
+        text-align: center;
+        padding: 0.75rem;
+        box-sizing: border-box;
       }
 
-      .main-content {
-        padding: 1rem;
+      .logout-form button {
+        margin: 0;
       }
 
-      table th, table td {
+      /* Smaller buttons and tighter spacing in table rows */
+      tbody td {
+        padding: 0.5rem 0.75rem;
+      }
+
+      .status-select-inline {
+        min-width: 110px;
+        max-width: 140px;
         font-size: 0.85rem;
-        padding: 0.6rem;
+        padding: 0.4rem 0.5rem;
       }
 
-      .view-button, .delete-button {
+      td > .view-button,
+      td > .delete-button {
         font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+        margin-right: 6px;
       }
     }
-
   </style>
 </head>
 <body>
 
-<header class="header">
-  <h1>Manage Orders</h1>
-  <a href="/admin/dashboard" class="back-button">Back to Dashboard</a>
-</header>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h1>Welcome, {{ admin }} 👋</h1>
+    <button class="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">☰</button>
+    <div class="nav-links" id="nav-links">
+      <a href="/admin/dashboard">Dashboard</a>
+      <a href="/admin/orders">Orders</a>
+      <a href="/admin/products">Products</a>
+      <form action="/admin/logout" method="post" class="logout-form">
+        <button type="submit">Logout</button>
+      </form>
+    </div>
+  </nav>
 
-<main class="main-content">
-  <h2>Order List</h2>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Order ID</th>
-        <th>Customer</th>
-        <th>Date</th>
-        <th>Status</th>
-        <th>Total (₹)</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="ordersTableBody">
-      {% for order in orders %}
-      <tr data-order-id="{{ order.id }}">
-        <td>{{ order.id }}</td>
-        <td>{{ order.customer.name }}</td>
-        <td>{{ order.created_at.strftime('%Y-%m-%d') }}</td>
-        <td>
-          <select class="status-select-inline" data-order-id="{{ order.id }}" {% if order.status in ['delivered', 'cancelled'] %} disabled {% endif %}>
-            <option value="placed" {{ 'selected' if order.status == 'placed' else '' }}>Placed</option>
-            <option value="accepted" {{ 'selected' if order.status == 'accepted' else '' }}>Accepted</option>
-            <option value="preparing" {{ 'selected' if order.status == 'preparing' else '' }}>Preparing</option>
-            <option value="delivered" {{ 'selected' if order.status == 'delivered' else '' }}>Delivered</option>
-            <option value="cancelled" {{ 'selected' if order.status == 'cancelled' else '' }}>Cancelled</option>
-          </select>
-        </td>
-        <td>₹{{ '%.2f'|format(order.total_price) }}</td>
-        <td>
-          <a href="{{ url_for('admin.get_order_details', order_id=order.id) }}" class="view-button">View</a>
-          <button class="delete-button" data-order-id="{{ order.id }}">Delete</button>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</main>
+  <!-- Orders content -->
+  <main class="main-content" role="main">
+    <div class="table-container" role="region" aria-label="Orders Table">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Order ID</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Total (₹)</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="ordersTableBody">
+          {% for order in orders %}
+          <tr data-order-id="{{ order.id }}">
+            <td>{{ order.id }}</td>
+            <td>{{ order.customer.name }}</td>
+            <td>{{ order.created_at.strftime('%Y-%m-%d') }}</td>
+            <td>
+              <select class="status-select-inline" data-order-id="{{ order.id }}"
+                {% if order.status in ['delivered','cancelled'] %}disabled{% endif %} aria-label="Change status for order {{ order.id }}">
+                <option value="placed" {{ 'selected' if order.status=='placed' else '' }}>Placed</option>
+                <option value="accepted" {{ 'selected' if order.status=='accepted' else '' }}>Accepted</option>
+                <option value="preparing" {{ 'selected' if order.status=='preparing' else '' }}>Preparing</option>
+                <option value="delivered" {{ 'selected' if order.status=='delivered' else '' }}>Delivered</option>
+                <option value="cancelled" {{ 'selected' if order.status=='cancelled' else '' }}>Cancelled</option>
+              </select>
+            </td>
+            <td>₹{{ '%.2f'|format(order.total_price) }}</td>
+            <td>
+              <a href="{{ url_for('admin.get_order_details',order_id=order.id) }}" class="view-button" role="button" tabindex="0" aria-label="View details for order {{ order.id }}">View</a>
+              <button class="delete-button" data-order-id="{{ order.id }}" aria-label="Delete order {{ order.id }}">Delete</button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
 
-<script>
-  // Capitalize helper
-  function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
 
-  // Update order status on dropdown change
-  document.querySelectorAll('.status-select-inline').forEach(selectElem => {
-    selectElem.dataset.prevStatus = selectElem.value;
+  <!-- Toggle script -->
+  <script>
 
-    selectElem.addEventListener('change', async () => {
-      const orderId = selectElem.dataset.orderId;
-      const newStatus = selectElem.value;
 
-      // If the order is already cancelled or delivered, prevent the change
-      if (selectElem.disabled) {
-        alert(`Order ${orderId} status is locked and cannot be changed.`);
-        selectElem.value = selectElem.dataset.prevStatus;
-        return;
-      }
+  
+    function toggleMenu() {
+      document.getElementById('nav-links').classList.toggle('show');
+    }
 
-      try {
-        const response = await fetch(`/admin/orders/${orderId}/status`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ status: newStatus })
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          throw new Error(errorData.detail || 'Failed to update status');
+    // Status update handlers
+    document.querySelectorAll('.status-select-inline').forEach(el => {
+      el.dataset.prev = el.value;
+      el.addEventListener('change', async () => {
+        const id = el.dataset.orderId, val = el.value;
+        if(el.disabled){ el.value = el.dataset.prev; return; }
+        try {
+          const res = await fetch(`/admin/orders/${id}/status`, {
+            method:'PUT',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({status: val})
+          });
+          if(!res.ok) throw new Error(await res.text());
+          el.dataset.prev = val;
+        } catch(e) {
+          alert('Status update failed');
+          el.value = el.dataset.prev;
         }
-
-        const updated = await response.json();
-        alert(`Order ${orderId} status updated to ${capitalize(updated.status)}.`);
-        selectElem.dataset.prevStatus = newStatus;
-
-      } catch (err) {
-        alert(`Error updating status: ${err.message}`);
-        selectElem.value = selectElem.dataset.prevStatus;
-      }
+      });
     });
-  });
 
-  // Delete button click handler
-  document.querySelectorAll('.delete-button').forEach(button => {
-    button.addEventListener('click', async (event) => {
-      const orderId = event.target.dataset.orderId;
-
-      // Confirm before deletion
-      if (!confirm(`Are you sure you want to delete order ${orderId}? This action cannot be undone.`)) {
-        return;
-      }
-
-      const row = event.target.closest('tr');
-      row.classList.add('deleting');  // Adding a class to show the deletion state
-
-      try {
-        const response = await fetch(`/admin/orders/${orderId}`, {
-          method: 'DELETE',
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to delete order');
+    // Delete buttons handlers
+    document.querySelectorAll('.delete-button').forEach(btn => {
+      btn.addEventListener('click', async e => {
+        const id = e.target.dataset.orderId;
+        if(!confirm(`Delete order ${id}?`)) return;
+        const row = e.target.closest('tr');
+        row.classList.add('deleting');
+        try {
+          const res = await fetch(`/admin/orders/${id}`, {method:'DELETE'});
+          if(!res.ok) throw new Error();
+          row.remove();
+        } catch {
+          alert('Deletion failed');
+          row.classList.remove('deleting');
         }
-
-        const result = await response.json();
-        alert(`Order ${orderId} deleted successfully.`);
-        row.remove();  // Remove the order row from the table
-
-      } catch (err) {
-        alert(`Error deleting order: ${err.message}`);
-        row.classList.remove('deleting');  // Remove the deletion state if error occurs
-      }
+      });
     });
-  });
-</script>
+  </script>
 
 </body>
 </html>
