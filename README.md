@@ -1,4 +1,4 @@
-# 🍬 Shree Thaal – Homemade Sweets Online Ordering & Admin Panel
+#  Shree Thaal – Homemade Sweets Online Ordering & Admin Panel
 
 **Shree Thaal** is a modern, lightweight web application designed for a **homemade sweets business** to accept and manage online orders. Customers can easily browse the menu and place orders **without creating an account**, while the admin has access to a secure backend panel to manage orders and products.
 
