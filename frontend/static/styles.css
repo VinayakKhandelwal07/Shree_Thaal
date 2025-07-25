@@ -237,6 +237,8 @@ body::before {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin-bottom: 3rem;
+    align-items: stretch; /* Ensure cards stretch equally */
+
 }
 
 .sweet-card {
@@ -249,6 +251,7 @@ body::before {
     position: relative;
       display: flex;
     flex-direction: column; /* Ensure contents are stacked vertically */
+    height: 100%; /* Ensures all cards are equal height */
 }
 
 .sweet-card::before {
@@ -280,6 +283,11 @@ body::before {
 
 .sweet-info {
     padding: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    line-height: 1.6; /* Better text readability */
+    font-size: 0.95rem;
 }
 
 .sweet-name {
